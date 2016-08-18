@@ -1,0 +1,24 @@
+name: javagame
+version: 0.3
+summary: A game base on JavaGame Alpha v1.8.1
+description: This snap is refer to https://github.com/redomar/JavaGame
+confinement: strict
+
+apps:
+  play:
+    command: bin/JavaGame.sh
+    plugs: [unity7, x11, network-bind, home, pulseaudio]
+parts:
+  javagame:
+    plugin: jdk
+    source: https://github.com/redomar/JavaGame.git
+  execute:
+    plugin: copy
+    files:
+      JavaGame.sh: bin/JavaGame.sh    
+  release:
+    after: [javagame]
+    plugin: copy
+    source: parts/javagame/src/jar
+    files:
+      javagame.jar: bin/javagame.jar
